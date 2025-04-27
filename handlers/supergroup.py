@@ -4,7 +4,6 @@ from aiogram.exceptions import TelegramForbiddenError
 
 from cfg import SUPER_GROUP, sectors_to_ids
 from filters import SuperGroupFilter
-from keyboards import get_cancelkb
 
         
 router = Router()
@@ -14,7 +13,7 @@ router.message.filter(
 
 @router.message(F.text)
 async def reply(message: Message, bot: Bot):
-    if not message.reply_to_message.text:
+    if not message.reply_to_message:
         return 
     
     atr = message.reply_to_message.text.split("_")
@@ -31,7 +30,8 @@ async def reply(message: Message, bot: Bot):
         # await message.copy_to(atr[0], reply_to_message_id=atr[1], caption="___herer___")
     except TelegramForbiddenError as e:
         await message.reply("Yuborilmadi, bot foydalanuvchi tomonidan blocklangan.")
-    except Exception:
+    except Exception as e:
+        print("Error in supergroup.py:34 :", e)
         pass
 
 

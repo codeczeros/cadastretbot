@@ -1,12 +1,18 @@
 from aiogram import Router, F
 from aiogram import types
 from aiogram.filters import Command
+
 from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
+
 import content
+from filters import ChatTypeFilter
 from keyboards import get_readkb, get_seckb
 
 router = Router()
+router.message.filter(
+    ChatTypeFilter(chat_type='private')
+)
 
 
 @router.message(Command("start"))
