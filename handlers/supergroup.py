@@ -13,7 +13,7 @@ router.message.filter(
 
 @router.message(F.text)
 async def reply(message: Message, bot: Bot):
-    if not message.reply_to_message:
+    if not (message.reply_to_message or message.reply_to_message.text):
         return 
     
     atr = message.reply_to_message.text.split("_")
